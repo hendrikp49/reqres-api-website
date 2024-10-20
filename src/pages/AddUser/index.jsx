@@ -1,55 +1,13 @@
-import axios from "axios";
-import { useState } from "react";
+import InputDataAdd from "./InputDataAdd";
 
 const AddUser = () => {
-  const [add, setAdd] = useState({
-    name: null,
-    job: null,
-  });
+  const dataInput = [
+    { judul: "Username", tipe: "text", nama: "username" },
+    { judul: "Email", tipe: "email", nama: "email" },
+    { judul: "Tanggal Lahir", tipe: "date", nama: "date" },
+  ];
 
-  const handleInput = (e) =>
-    setAdd({
-      ...add,
-      [e.target.name]: e.target.value,
-    });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const payload = {
-      name: add.email,
-      job: add.password,
-    };
-
-    axios
-      .post("https://reqres.in/api/users", payload)
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err.response.data.error));
-  };
-
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="">Name</label>
-        <input
-          onChange={handleInput}
-          type="text"
-          name="email"
-          className="border"
-        />
-        <label htmlFor="">Job</label>
-        <input
-          onChange={handleInput}
-          type="text"
-          name="password"
-          className="border"
-        />
-        <button type="submit" className="border">
-          Submit
-        </button>
-      </form>
-    </div>
-  );
+  return <InputDataAdd dataInput={dataInput} />;
 };
 
 export default AddUser;

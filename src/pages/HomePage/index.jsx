@@ -1,77 +1,24 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import DataHomePage from "./DataHomePage";
 
 const HomePage = () => {
-  const [listUser, setListUser] = useState([]);
-  const [pagination, setPagination] = useState({
-    page: 1,
-    per_page: 6,
-    total: null,
-    total_pages: null,
-  });
-
-  const handleListUser = () => {
-    axios
-      .get(`https://reqres.in/api/users?page=${pagination.page}`)
-      .then((res) => {
-        setListUser(res.data.data);
-        setPagination({
-          page: res.data.page,
-          per_page: res.data.page,
-          total: res.data.total,
-          total_pages: res.data.total_pages,
-        });
-      })
-      .catch((err) => alert(err.response));
-  };
-
-  const handleNext = () => {
-    setPagination({
-      ...pagination,
-      page: pagination.page + 1,
-    });
-  };
-
-  const handleBack = () => {
-    setPagination({
-      ...pagination,
-      page: pagination.page - 1,
-    });
-  };
-
-  useEffect(() => {
-    handleListUser();
-  }, [pagination.page]);
-
-  return (
-    <div>
-      <button
-        disabled={pagination.page === 1}
-        onClick={handleBack}
-        className="disabled:cursor-not-allowed"
-      >
-        Prev
-      </button>
-      <button
-        disabled={pagination.page === pagination.total_pages}
-        onClick={handleNext}
-        className="disabled:cursor-not-allowed"
-      >
-        Next
-      </button>
-      {listUser.map((user) => (
-        <div key={user.id}>
-          <img src={user.avatar} alt="" />
-          <p>{user.first_name + " " + user.last_name}</p>
-          <p>{user.email}</p>
-          <Link to={`/detail-user/${user.id}`}>
-            <button className="border">Detail</button>
-          </Link>
-        </div>
-      ))}
-    </div>
-  );
+  const dataHero = [
+    {
+      judul: "Reqres is Real API",
+      ket: "Reqres simulates real application scenarios. If you want to test a user authentication system, Reqres will respond to a successful login/register request with a token for you to identify a sample user, or with a 403 forbidden response to an unsuccessful login/registration attempt.",
+      img: "./img/rocket.png",
+    },
+    {
+      judul: "Technical demos and tutorials",
+      ket: "If you're trying to demonstrate a front-end (JavaScript-based) concept, you don't really want the hassle of setting up an API, or even a server (especially during a live workshop or demo).",
+      img: "./img/tutorial.png",
+    },
+    {
+      judul: "Rapid prototyping of interfaces",
+      ket: "When prototyping a new interface, you just want an API there, with minimal setup effort involved. Normally, I'd point people, who aren't too familiar with backend programming, to Sailsjs which can auto-generate a REST-API for you from the command line.",
+      img: "./img/programming.png",
+    },
+  ];
+  return <DataHomePage dataHero={dataHero} />;
 };
 
 export default HomePage;
